@@ -131,6 +131,11 @@ var options = {
     extensions: fileExtensions
       .map((extension) => '.' + extension)
       .concat(['.js', '.jsx', '.ts', '.tsx', '.css']),
+    fallback: {
+      fs: false, // for opencv-js
+      path: false, // for opencv-js
+      crypto: false, // for opencv-js
+    }
   },
   plugins: [
     isDevelopment && new ReactRefreshWebpackPlugin(),
@@ -187,7 +192,53 @@ var options = {
     new CopyWebpackPlugin({
       patterns: [
         {
+          from: 'src/pages/Background/sandbox.js',
+          to: path.join(__dirname, 'build'),
+          force: true,
+        },
+      ],
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'src/pages/Background/sandbox.html',
+          to: path.join(__dirname, 'build'),
+          force: true,
+        },
+      ],
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
           from: 'src/pages/Background/fibonacci.js',
+          to: path.join(__dirname, 'build'),
+          force: true,
+        },
+      ],
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'src/pages/Background/cv.worker.js',
+          to: path.join(__dirname, 'build'),
+          force: true,
+        },
+      ],
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'src/pages/Background/opencv.js',
+          to: path.join(__dirname, 'build'),
+          force: true,
+        },
+        {
+          from: 'src/pages/Background/opencv_3_4_custom_O3.js',
+          to: path.join(__dirname, 'build'),
+          force: true,
+        },
+        {
+          from: 'src/pages/Background/opencv_3_4_custom_Oz.js',
           to: path.join(__dirname, 'build'),
           force: true,
         },
