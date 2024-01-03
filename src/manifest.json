@@ -39,9 +39,13 @@
       "resources": [
         "content.styles.css",
         "icon-128.png",
+        "icon-224.png",
         "icon-34.png",
         "cv.bundle.js",
-        "opencv.js"
+        "opencv.js",
+        "model.onnx",
+        "ort-wasm-simd.wasm",
+        "ort-wasm-simd-threaded.wasm"
       ],
       "matches": []
     }

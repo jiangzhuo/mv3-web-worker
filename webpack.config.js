@@ -45,6 +45,7 @@ var options = {
     contentScript: path.join(__dirname, 'src', 'pages', 'Content', 'index.js'),
     devtools: path.join(__dirname, 'src', 'pages', 'Devtools', 'index.js'),
     panel: path.join(__dirname, 'src', 'pages', 'Panel', 'index.jsx'),
+    'worker': path.join(__dirname, 'src', 'pages', 'Background', 'worker.ts'),
   },
   chromeExtensionBoilerplate: {
     notHotReload: ['background', 'contentScript', 'devtools'],
@@ -217,9 +218,13 @@ var options = {
       ],
     }),
     new CopyWebpackPlugin({
+      // Use copy plugin to copy *.wasm to output folder.
+      patterns: [{ from: 'node_modules/onnxruntime-web/dist/*.wasm', to: '[name][ext]' }]
+    }),
+    new CopyWebpackPlugin({
       patterns: [
         {
-          from: 'src/pages/Background/cv.worker.js',
+          from: 'src/pages/Background/model.onnx',
           to: path.join(__dirname, 'build'),
           force: true,
         },
@@ -239,6 +244,15 @@ var options = {
         },
         {
           from: 'src/pages/Background/opencv_3_4_custom_Oz.js',
+          to: path.join(__dirname, 'build'),
+          force: true,
+        },
+      ],
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'src/assets/img/icon-224.png',
           to: path.join(__dirname, 'build'),
           force: true,
         },
@@ -296,6 +310,9 @@ var options = {
   infrastructureLogging: {
     level: 'info',
   },
+    experiments: {
+        topLevelAwait: true,
+    }
 };
 
 if (env.NODE_ENV === 'development') {
