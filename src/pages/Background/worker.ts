@@ -3,7 +3,7 @@ import * as ort from 'onnxruntime-web';
 ort.env.wasm.numThreads = 1;
 
 async function processFrame(frame) {
-  const session = await ort.InferenceSession.create("/model.onnx", { executionProviders: ['webgl'] });
+  const session = await ort.InferenceSession.create("/model.onnx");
   console.log('created session')
 
   // Convert to Float32 tensor.
@@ -24,6 +24,7 @@ async function processFrame(frame) {
   // Convert Float32 image on range [0, 1] back to ImageData.
   const outImage = outputTensor.toImageData();
   console.log('got output image data')
+  return outImage;
 }
 
 addEventListener('message', (e) => {
